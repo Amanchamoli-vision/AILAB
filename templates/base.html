@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lab</title>
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            /* background: linear-gradient(135deg, #1e3c72, #2a5298); */
+            color: #fff;
+            text-align: center;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: rgba(99, 210, 238, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            text-decoration: none;
+            color: hsl(286, 100%, 50%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+            color: #ff6600;
+        }
+
+        /* Updated Header Buttons */
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #ff6600, #ffcc00);
+            transition: 0.4s ease-in-out;
+            box-shadow: 0 4px 8px rgba(255, 204, 0, 0.4);
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            background: linear-gradient(135deg, #ffcc00, #ff6600);
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(102, 226, 52, 0.5);
+        }
+
+        /* Main Content */
+        main {
+            padding: 60px 20px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Button Styling */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: #ff6600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #ffcc00;
+            color: #1e3c72;
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+            }
+            
+            nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav a {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">AI Lab Data of Student</a>
+        <nav>
+            <a href="/login">Admin Login</a>
+            <a href="/student_data">Student Data</a>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

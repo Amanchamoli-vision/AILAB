@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #8E2DE2;
+        margin-bottom: 20px;
+    }
+
+    .filter-form, .download-form {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .filter-form label, .download-form label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .filter-form input, .download-form input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .filter-form button, .download-form button {
+        padding: 8px 15px;
+        background-color: #8E2DE2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .filter-form button:hover, .download-form button:hover {
+        background-color: #4A00E0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #8E2DE2;
+        color: white;
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .delete-btn {
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .delete-btn:hover {
+        background-color: #cc0000;
+    }
+</style>
+
+<h1>Student Data</h1>
+
+<div class="filter-form">
+    <form method="GET" action="/student_data">
+        <label>Month:</label>
+        <input type="text" name="month" placeholder="MM">
+        <label>Year:</label>
+        <input type="text" name="year" placeholder="YYYY">
+        <button type="submit">Filter</button>
+    </form>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>SNO</th>
+            <th>Date</th>
+            <th>School Name</th>
+            <th>No of Students</th>
+            <th>Activity</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr id="row-{{ student._id }}">
+            <td>{{ student.sno }}</td>
+            <td>{{ student.date }}</td>
+            <td>{{ student.school_name }}</td>
+            <td>{{ student.no_of_students }}</td>
+            <td>{{ student.activity }}</td>
+            <td>
+                <button class="delete-btn" onclick="deleteRow('{{ student._id }}')">Delete</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="download-form">
+    <form action="/download_csv" method="POST">
+        <label>Username:</label>
+        <input type="text" name="username" required placeholder="Enter username">
+        <label>Password:</label>
+        <input type="password" name="password" required placeholder="Enter password">
+        <button type="submit">Download CSV</button>
+    </form>
+</div>
+
+<script>
+  function deleteRow(studentId) {
+    if (confirm("Are you sure you want to delete this row?")) {
+        fetch(`/delete_student/${studentId}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            console.log("Response status:", response.status);  // Debugging
+            if (response.ok) {
+                // Remove the row from the table
+                document.getElementById(`row-${studentId}`).remove();
+                alert("Row deleted successfully!");
+            } else {
+                response.json().then(data => {
+                    console.log("Error data:", data);  // Debugging
+                    alert("Failed to delete row: " + (data.error || "Unknown error"));
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred while deleting the row.");
+        });
+    }
+}
+</script>
+{% endblock %}

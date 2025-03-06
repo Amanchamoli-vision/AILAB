@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    /* Reset body margins */
+    body, html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Prevent scrolling */
+    }
+
+    /* Gallery Section */
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+        gap: 5px;
+        width: calc(100vw - 20px); /* Ensure full width minus slight padding */
+        height: calc(100vh - 80px); /* Start from header height */
+        margin-left: 0; /* Start from the left edge */
+        position: absolute;
+        top: 80px; /* Adjusted for header height */
+        left: 0; /* Align to the left */
+    }
+
+    /* Images Style */
+    .gallery img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures images fit properly */
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+    /* Hover Effect */
+    .gallery img:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 20px rgba(255, 204, 0, 0.6);
+        cursor: pointer;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .gallery {
+            grid-template-columns: 1fr; /* Single column for mobile */
+            height: auto;
+            top: 70px; /* Adjust for smaller headers */
+        }
+    }
+</style>
+
+<div class="gallery">
+    <img src="{{ url_for('static', filename='rsc.jpg') }}" alt="Image 1">
+    <img src="{{ url_for('static', filename='rsc3.jpg') }}" alt="Image 2">
+    <img src="{{ url_for('static', filename='rsc1.jpg') }}" alt="Image 3">
+</div>
+{% endblock %}
